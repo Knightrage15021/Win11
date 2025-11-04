@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="icon" href="https://ssl.gstatic.com/classroom/favicon.png" />
+    <style>
+        :root {
+            --primary-color: #007bff;
+            --background-color: #f8f9fa;
+            --text-color: #343a40;
+            --card-bg-color: #ffffff;
+            --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+        body {
+            margin: 0;
+            font-family: var(--font-family);
+            background-color: var(--background-color);
+            color: var(--text-color);
+            scroll-behavior: smooth;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        header {
+            background: #fff;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        header .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        nav a {
+            margin-left: 1.5rem;
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        nav a:hover {
+            color: var(--primary-color);
+        }
+        .section {
+            padding: 5rem 0;
+            min-height: 100vh;
+            display: none; /* Hide all sections by default */
+        }
+        .active-section {
+            display: flex; /* Show only the active section */
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        #home {
+            background-color: #e9ecef;
+        }
+        #home h1 {
+            font-size: 3rem;
+        }
+        #websites-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        .website-card {
+            background: var(--card-bg-color);
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            overflow: hidden;
+            cursor: pointer;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        .website-card:hover {
+            transform: translateY(-5px);
+        }
+        .website-card .website-title {
+            padding: 1rem;
+            font-weight: bold;
+            color: var(--text-color);
+        }
+        .website-card .placeholder-image {
+            background: #007bff;
+            height: 150px;
+        }
+        #iframe-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+        .iframe-container-modal {
+            position: relative;
+            width: 90%;
+            height: 90%;
+        }
+        #iframe-modal iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        #iframe-modal .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 2rem;
+            color: white;
+            cursor: pointer;
+        }
+        #iframe-modal .fullscreen-btn {
+            position: absolute;
+            top: 10px;
+            right: 60px;
+            padding: 8px 12px;
+            font-size: 1rem;
+            cursor: pointer;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            border-radius: 5px;
+            z-index: 2010;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="#home" class="logo">Knightrage</a>
+        <nav>
+            <a href="#home" class="nav-btn">Home</a>
+            <a href="#websites" class="nav-btn">Websites</a>
+        </nav>
+    </header>
+<main>
+    <!-- Home Section -->
+    <section id="home" class="section active-section">
+        <div class="container">
+            <h1>Welcome</h1>
+            <p>New update!</p>
+        </div>
+    </section>
+
+    <!-- Websites Section -->
+    <section id="websites" class="section">
+        <div class="container">
+            <h2>Websites</h2>
+            <div id="websites-grid">
+                <!-- Website buttons will be generated here by JavaScript -->
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- Modal for displaying iframes -->
+<div id="iframe-modal">
+    <div class="iframe-container-modal">
+        <button class="close-btn">&times;</button>
+        <button class="fullscreen-btn">Fullscreen</button>
+        <iframe id="modal-iframe" src="" allow="fullscreen" allowfullscreen></iframe>
+    </div>
+</div>
+<script>
+    // Define the websites to embed
+    const websites = [
+        { name: "23azo", url: "https://23azo.com/" },
+        { name: "Elgoog", url: "https://elgoog.im/" },
+        { name: "Pizza-Edition", url: "https://pizzaedition.win/" },
+        { name: "Coolors", url: "https://coolors.co/" },
+        { name: "Playmini", url: "https://playminigames.net/" },
+        { name: "Playpage", url: "https://www.playpager.com/" },
+        { name: "OnlineGames", url: "https://onlinegames.io/" },
+        { name: "Playsaurus", url: "https://playsaurus.com/" },
+        { name: "Gamedistribution", url: "https://gamedistribution.com/" },
+        { name: "Freeonline", url: "https://freeonlinegames.com/" },
+        { name: "Gamemono", url: "https://gamemonetize.com/" },
+        { name: "DefinetlySci", url: "https://definitelyscience.com/" },
+        { name: "WebArch", url: "https://archive.org/" },
+        { name: "TierMkr", url: "https://tiermaker.com/" },
+        { name: "Monstertracks", url: "https://monstertracks.github.io/" },
+        { name: "Aking", url: "https://aking.io/" },
+        { name: "Eagler", url: "https://eaglercraft.github.io/" },
+    ];
+
+    const websitesGrid = document.getElementById('websites-grid');
+    const iframeModal = document.getElementById('iframe-modal');
+    const modalIframe = document.getElementById('modal-iframe');
+    const fullscreenBtn = document.querySelector('#iframe-modal .fullscreen-btn');
+
+    // Function to generate the website buttons
+    function generateWebsiteButtons() {
+        websites.forEach(site => {
+            const card = document.createElement('div');
+            card.className = 'website-card';
+            card.innerHTML = `
+                <div class="placeholder-image"></div>
+                <div class="website-title">${site.name}</div>
+            `;
+            card.addEventListener('click', () => showIframeModal(site.url));
+            websitesGrid.appendChild(card);
+        });
+    }
+
+    // Function to show the iframe modal
+    function showIframeModal(url) {
+        modalIframe.src = url;
+        iframeModal.style.display = 'flex';
+    }
+
+    // Event listener for the close button
+    document.querySelector('.close-btn').addEventListener('click', () => {
+        iframeModal.style.display = 'none';
+        modalIframe.src = ''; // Stop the iframe content from running
+    });
+    
+    // Event listener for the fullscreen button
+    fullscreenBtn.addEventListener('click', () => {
+        if (modalIframe.requestFullscreen) {
+            modalIframe.requestFullscreen();
+        } else if (modalIframe.webkitRequestFullscreen) { /* Safari */
+            modalIframe.webkitRequestFullscreen();
+        }
+    });
+
+    // Run the button generation function
+    generateWebsiteButtons();
+    const navButtons = document.querySelectorAll('.nav-btn');
+    const sections = document.querySelectorAll('.section');
+
+    function switchSection(targetId) {
+        sections.forEach(section => {
+            section.classList.remove('active-section');
+            if (section.id === targetId.substring(1)) {
+                section.classList.add('active-section');
+            }
+        });
+    }
+
+    navButtons.forEach(button => {
+        button.addEventListener('click', (e) => {
+            e.preventDefault();
+            const targetId = e.target.getAttribute('href');
+            switchSection(targetId);
+        });
+    });
+
+    // Handle initial load based on URL hash
+    if (window.location.hash) {
+        switchSection(window.location.hash);
+    } else {
+        switchSection('#home');
+    }
+</script>
+</body>
+</html>
